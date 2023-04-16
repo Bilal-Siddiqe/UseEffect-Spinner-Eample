@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, CSSProperties, useEffect } from "react";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override: CSSProperties = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
 
 function App() {
+
+  let [load, setLoad] = useState(true);
+  const [counter, setCounter] = useState(0);
+
+  useEffect(() => {
+    setTimeout(() => { setLoad(false)}, 500);
+  }, [counter]);
+
+
+  function add() {
+    setCounter(counter + 1);
+    setLoad(true);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="sweet-loading">
+      <ClipLoader
+        loading={load}
+        size={150}
+      />
+      {counter}
+
+      <button onClick={add}>Add</button>
+
     </div>
   );
 }
+
 
 export default App;
